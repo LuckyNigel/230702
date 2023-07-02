@@ -1,2 +1,2 @@
-# 230702
+# for git study
 for git study
