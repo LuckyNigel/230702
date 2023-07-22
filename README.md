@@ -1,6 +1,2 @@
-# for git study
-for git study 1
-test 1
-time 154 from idea ij
-time from cursor 214
-
+#这是一个自动化工具#
+泛娱乐平台电商直播中控台自动弹商品讲解
