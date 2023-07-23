@@ -4,11 +4,27 @@ import ctypes
 import pyautogui
 import time
 import pyperclip
-from pynput.mouse import Listener
+from pynput.mouse import Listener as MouseListener
+from pynput.keyboard import Controller as KeyboardController
+from pynput.mouse import Controller as MouseController
+from pynput.keyboard import Key, Listener as KeyboardListener
 
-# 定义全局变量
+# 定义全局变量坐标
 global coord_x, coord_y
-coord_x, coord_y = 0, 0
+
+keyboard_active = False
+
+def on_key_press(key):
+    global keyboard_active
+    keyboard_active = True
+
+def on_key_release(key):
+    global keyboard_active
+    keyboard_active = False
+
+# 在一个新的线程中启动键盘监听器
+keyboard_listener = KeyboardListener(on_press=on_key_press, on_release=on_key_release)
+keyboard_listener.start()
 
 def on_click(x, y, button, pressed):
     # 当鼠标左键被按下时，更新坐标
@@ -17,11 +33,14 @@ def on_click(x, y, button, pressed):
         coord_x, coord_y = x, y
         # 更新coord_label的文本和背景颜色
         coord_label.config(text="x: {}, y: {}".format(coord_x, coord_y), bg="#D8BFD8")
+        # 停止监听
+        return False
 
 def copy_coord():
     # 启动鼠标监听
-    listener = Listener(on_click=on_click)
+    listener = MouseListener(on_click=on_click)
     listener.start()  # 使用start而不是join，以便在监听鼠标的同时继续运行其他代码
+
 
 def start_program():
     # 在新的线程中运行你的程序
@@ -31,6 +50,10 @@ def stop_program():
     # 停止你的程序
     global end_time
     end_time = time.time()  # 立即结束循环
+
+# 创建键盘和鼠标控制器
+keyboard = KeyboardController()
+mouse = MouseController()
 
 def your_program():
     # 关闭安全特性
@@ -42,7 +65,7 @@ def your_program():
     try:
         # 循环持续10分钟
         global end_time
-        end_time = time.time() + 10*60  # 10分钟后的时间
+        end_time = time.time() + 60*60  # 60分钟后的时间
         while time.time() < end_time:
             try:
                 # 移动鼠标到指定位置
@@ -65,21 +88,29 @@ def your_program():
                 time.sleep(2)
 
             except pyautogui.FailSafeException:
-                print("检测到鼠标异常,程序将在10秒后重新启动")
-                time.sleep(20)
+                # 在你的代码中检查键盘是否活跃
+                while True:
+                    time.sleep(5)  # 暂停5秒
+                    # 如果鼠标和键盘沉默5秒，则恢复运行
+                    if mouse.position == (coord_x, coord_y) and not keyboard_active:
+                        break
+                    keyboard_active = False  # 重置键盘活动状态
                 continue
 
     except KeyboardInterrupt:
-        print("程序被用户手动停止")
+        return(0)
 
 # 创建窗体
 root = tk.Tk()
 
 # 设置窗体的名称
-root.title("中控助手")
+root.title("中控助手 by ZZ")
+
+# 设置窗体始终在最前方
+root.attributes('-topmost', 1)
 
 # 设置窗体的最小大小
-root.minsize(350, 125)
+root.minsize(400, 125)
 
 # 创建一个Frame
 frame = tk.Frame(root)
