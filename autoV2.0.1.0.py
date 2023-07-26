@@ -10,7 +10,7 @@ class AutoClickerApp:
         self.root = root
         self.root.title("中控助手")  # 设置窗体标题为“中控助手”
         self.root.geometry("400x200")
-        self.root.overrideredirect(True)  # 取消窗体上边框
+        #self.root.overrideredirect(True)  # 取消窗体上边框
 
         # 实现窗体拖动
         self.drag_data = {"x": 0, "y": 0}
@@ -37,8 +37,6 @@ class AutoClickerApp:
 
         self.select_btn = tk.Button(self.right_frame, text="选择坐标", command=self.select_coordinates)
         self.select_btn.pack(pady=10)
-        self.loop_btn = tk.Button(self.right_frame, text="设定点击循环", command=self.set_click_loop)
-        self.loop_btn.pack(pady=10)
         self.start_btn = tk.Button(self.right_frame, text="开始", command=self.start_auto_click)
         self.start_btn.pack(pady=10)
         self.stop_btn = tk.Button(self.right_frame, text="停止", command=self.stop_auto_click)
@@ -84,9 +82,6 @@ class AutoClickerApp:
             if len(self.coordinates) == 3:
                 self.root.unbind("<Button-1>")
 
-    def set_click_loop(self):
-        # 在这里实现点击循环的设置，例如点击间隔等
-        pass
 
     def start_auto_click(self):
         # 添加监听鼠标和键盘的线程
