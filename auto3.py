@@ -78,7 +78,7 @@ def your_program():
             except pyautogui.FailSafeException:
                 while True:
                     time.sleep(5)  
-                    if mouse.position == (coord_x, coord_y) and not keyboard_active:
+                    if mouse.position == (coord_x1, coord_y1) and not keyboard_active:
                         break
                     keyboard_active = False  
                 continue
