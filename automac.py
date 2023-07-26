@@ -7,21 +7,18 @@ import threading
 x = 100
 y = 200
 
-# Create a function to start the program
+# 创建启动程序的函数
 def start_program():
     global running
     running = True
-    # Create a new thread to run the program
-    thread = threading.Thread(target=run_program)
-    thread.start()
 
-# Create a function to stop the program
+# 创建停止程序的函数
 def stop_program():
     global running
     running = False
 
-# Create a function to run the program
-def run_program():
+# 创建运行程序的函数
+def run_program():  
     while running:
         # 获取当前鼠标位置
         current_x, current_y = pyautogui.position()
@@ -29,33 +26,36 @@ def run_program():
         # 如果鼠标位置与目标位置不一致，则移动鼠标到目标位置
         if current_x != x or current_y != y:
             pyautogui.moveTo(x, y)
-            # Add your indented block of code here
+        # 在这里添加缩进的代码块
 
-        # 点击鼠标
-        pyautogui.click()
+# 创建一个新线程来运行程序
+thread = threading.Thread(target=run_program)
 
-        # 等待一段时间
-        time.sleep(5)
+# 点击鼠标
+pyautogui.click()
 
-# Create the main window
+# 等待一段时间
+time.sleep(5)
+
+# 创建主窗口
 window = tk.Tk()
-window.title("Mouse Click Program")
+window.title("鼠标点击程序")
 window.geometry("300x200")
 
-# Create a frame for the buttons
+# 创建按钮的框架
 button_frame = tk.Frame(window)
 button_frame.pack(pady=20)
 
-# Create the start button
-start_button = tk.Button(button_frame, text="Start", command=start_program)
+# 创建启动按钮
+start_button = tk.Button(button_frame, text="启动", command=start_program)
 start_button.pack(side=tk.LEFT, padx=10)
 
-# Create the stop button
-stop_button = tk.Button(button_frame, text="Stop", command=stop_program)
+# 创建停止按钮
+stop_button = tk.Button(button_frame, text="停止", command=stop_program)
 stop_button.pack(side=tk.LEFT, padx=10)
 
-# Set the initial running state
+# 设置初始运行状态
 running = False
 
-# Start the main event loop
+# 开始主事件循环
 window.mainloop()
