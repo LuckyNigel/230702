@@ -104,7 +104,7 @@ def your_program():
 # 创建GUI窗口
 root = tk.Tk()
 
-root.title("中控助手 by ZZ")
+root.title("中控助手")
 
 root.attributes('-topmost', 1)
 
