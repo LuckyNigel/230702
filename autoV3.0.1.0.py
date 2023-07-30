@@ -100,11 +100,13 @@ def copy_coord():
 # 启动程序
 def start_program():
     threading.Thread(target=your_program).start()
+    start_timer()
 
 # 停止程序
 def stop_program():
     global end_time
-    end_time = time.time()  
+    end_time = time.time()
+    stop_timer()
 
 keyboard = KeyboardController()
 mouse = MouseController()
@@ -152,24 +154,25 @@ def on_press(key):
     if key == Key.esc:  # 如果按下的是ESC键
         end_time = time.time()  # 将end_time设为当前时间，以停止your_program中的循环
 
+
+
 # 在新线程中启动键盘监听
 keyboard_listener = KeyboardListener(on_press=on_press)
 keyboard_listener.start()
 
-
 def update_timer():
     global time_elapsed
-    # 倒计时总时长（单位：秒）
-    total_seconds = 240*60
+    #倒计时总时长
+    total_seconds=  14400
 
-    # 获取当前剩余秒数
+    #获取当前剩余秒数
     remaining_seconds = total_seconds - time_elapsed
 
-    # 将剩余秒数转换成分钟和秒
+     # 将剩余秒数转换成分钟和秒
     minutes = remaining_seconds // 60
     seconds = remaining_seconds % 60
 
-    # 格式化显示时间为mm:ss
+     # 格式化显示时间为mm:ss
     timer_label.config(text=f"{minutes:02d}:{seconds:02d}")
 
     # 继续更新倒计时，直到计时结束
@@ -190,6 +193,8 @@ def start_timer():
 def stop_timer():
     global is_timer_stopped
     is_timer_stopped = True
+    timer_label.config(text="请重启脚本")
+
 
 
 # 创建GUI窗口
@@ -209,20 +214,17 @@ frame = tk.Frame(root, width=140, height=30,)
 frame.place(relx=0.15, rely=0.05, anchor='nw')
 
 # 创建显示倒计时的标签
-timer_label = tk.Label(frame, text="240:00", bg="#ffab91", fg="white", font=("Helvetica", 14))
+timer_label = tk.Label(frame, text="240:00", bg="#b7c3d0", fg="#0892d0", font=("Helvetica", 14))
 timer_label.pack()
-
-frame = tk.Frame(root)
-frame.place(relx=0.5, rely=0.5, anchor='center')
 
 frame = tk.Frame(root)
 frame.place(relx=0.5, rely=0.5, anchor='center')  
 
-coord_label1 = tk.Label(root, text="x: 0, y: 0", bg="grey")
+coord_label1 = tk.Label(root, text="[2链]x: 0, y: 0", bg="#dedede")
 coord_label1.place(relx=0.25, rely=0.3, anchor='center')  
-coord_label2 = tk.Label(root, text="x: 0, y: 0", bg="grey")
+coord_label2 = tk.Label(root, text="[1链]x: 0, y: 0", bg="#dedede")
 coord_label2.place(relx=0.25, rely=0.5, anchor='center')  
-coord_label3 = tk.Label(root, text="x: 0, y: 0", bg="grey")
+coord_label3 = tk.Label(root, text="查询x: 0, y: 0", bg="#dedede")
 coord_label3.place(relx=0.25, rely=0.7, anchor='center')    
 
 frame = tk.Frame(root)
@@ -232,15 +234,14 @@ frame.place(relx=0.75, rely=0.43, anchor='center')
 copy_button = tk.Button(frame, text="选择坐标", command=copy_coord)
 copy_button.pack(side=tk.TOP, pady=(50, 10))  
 
-start_button = tk.Button(frame, text="开始", command=start_timer)
-start_button.pack(side=tk.TOP, pady=(10, 10))
-stop_button = tk.Button(frame, text="停止", command=stop_timer)
+start_button = tk.Button(frame, text="开始", command=start_program)
+start_button.pack(side=tk.TOP, pady=(10, 10))  
+stop_button = tk.Button(frame, text="停止", command=stop_program)
 stop_button.pack(side=tk.TOP, pady=(10, 50))
 
 # 创建一个标签显示“按下ESC键终止进程”
 esc_label = tk.Label(root, text="运行中按下ESC键可终止进程", fg="lightcoral")
 esc_label.pack(side=tk.BOTTOM)
-
 
 # 启动GUI主循环
 root.mainloop()
