@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Click Counter with Random Light Colors and Timer</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 5px;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #resetButton {
+      margin-bottom: 10px;
+      font-size: 14px;
+      background-color: #e0e0e0;
+      color: #333;
+    }
+  </style>
+  <script>
+    let startTime = 0; // Variable to store the start time
+    let isTimerRunning = false; // Variable to check if the timer is already running
+    let totalClicks = 0; // Variable to store the total number of clicks
+
+    // Function to start the timer
+    function startTimer() {
+      if (!isTimerRunning) {
+        startTime = Date.now();
+        isTimerRunning = true;
+        updateTimer();
+      }
+    }
+
+    // Function to update the timer display
+    function updateTimer() {
+      const timerElement = document.getElementById('timer');
+
+      setInterval(() => {
+        if (isTimerRunning) {
+          const currentTime = Date.now();
+          const elapsedSeconds = Math.floor((currentTime - startTime) / 1000);
+          timerElement.innerText = `Time Elapsed: ${elapsedSeconds} seconds`;
+        }
+      }, 1000); // Update every 1 second (1000ms)
+    }
+
+    // Function to reset click counts
+    function resetClickCounts() {
+      totalClicks = 0;
+      document.getElementById('button1').dataset.clicks = 0;
+      document.getElementById('button2').dataset.clicks = 0;
+      document.getElementById('button3').dataset.clicks = 0;
+      document.getElementById('button4').dataset.clicks = 0;
+      document.getElementById('button1').innerText = 'Click Me (0)';
+      document.getElementById('button2').innerText = 'Click Me (0)';
+      document.getElementById('button3').innerText = 'Click Me (0)';
+      document.getElementById('button4').innerText = 'Click Me (0)';
+    }
+
+    // Function to update the click count and change the button color
+    function updateClickCountAndColor(buttonId) {
+      const button = document.getElementById(buttonId);
+      let clickCount = parseInt(button.dataset.clicks) || 0;
+      clickCount++;
+      button.dataset.clicks = clickCount;
+      button.innerHTML = `Click Me (${clickCount})`;
+
+      const randomColor = getRandomLightColor();
+      button.style.backgroundColor = randomColor;
+
+      totalClicks++;
+      if (totalClicks === 1) {
+        startTimer();
+      }
+    }
+
+    // Function to generate a random light color
+    function getRandomLightColor() {
+      const letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 3; i++) {
+        color += letters[Math.floor(Math.random() * 4) + 8]; // Starts with a lighter value for each RGB component
+      }
+      return color;
+    }
+  </script>
+</head>
+<body>
+  <div class="button-container">
+    <button id="resetButton" onclick="resetClickCounts()">Reset Click Count</button>
+    <button id="button1" onclick="updateClickCountAndColor('button1')">Click Me (0)</button>
+    <button id="button2" onclick="updateClickCountAndColor('button2')">Click Me (0)</button>
+    <button id="button3" onclick="updateClickCountAndColor('button3')">Click Me (0)</button>
+    <button id="button4" onclick="updateClickCountAndColor('button4')">Click Me (0)</button>
+
+    <div id="timer">Time Elapsed: 0 seconds</div>
+  </div>
+</body>
+</html>
