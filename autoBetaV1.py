@@ -41,7 +41,7 @@ def your_program():
 
     try:
         global end_time
-        end_time = time.time() + 240*60  
+        end_time = time.time() + 480*60
         start_time = time.time()  # 记录开始时间
         while time.time() < end_time:
 
