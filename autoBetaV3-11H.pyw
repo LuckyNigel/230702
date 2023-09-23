@@ -62,9 +62,7 @@ mouse = MouseController()
 
 def your_program():
     pyautogui.FAILSAFE = False
-
     time.sleep(5)
-
     try:
         global end_time
         end_time = time.time() + 660 * 60
@@ -94,6 +92,7 @@ def your_program():
         return
 
 
+# 以下是UI模块
 root = tk.Tk()
 # 锁定窗体大小，使其不可缩放
 root.resizable(False, False)
