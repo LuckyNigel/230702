@@ -9,7 +9,7 @@ from pynput.mouse import Listener as MouseListener, Controller as MouseControlle
 class AutoClicker:
     def __init__(self, root):
         self.root = root
-        self.root.title("讲解Click-12H")
+        self.root.title("讲解点击-Option")
         self.root.geometry("450x225")  # 修改窗体默认大小
         # 锁定窗体禁止缩放
         self.root.resizable(0, 0)
@@ -33,7 +33,7 @@ class AutoClicker:
         self.coord_label1.grid(row=0, column=0, padx=10, pady=5, sticky='w')
         self.coord_label2 = ttk.Label(left_frame, text="[1链坐标] x: 0, y: 0", style='TLabel')
         self.coord_label2.grid(row=1, column=0, padx=10, pady=5, sticky='w')
-        self.coord_label3 = ttk.Label(left_frame, text="订单查询 x: 0, y: 0", style='TLabel')
+        self.coord_label3 = ttk.Label(left_frame, text="[订单查询] x: 0, y: 0", style='TLabel')
         self.coord_label3.grid(row=2, column=0, padx=10, pady=5, sticky='w')
 
         # 选择持续时间标签

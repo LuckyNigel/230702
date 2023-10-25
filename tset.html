@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Click Counter with Random Light Colors and Timer</title>
+  <meta charset="utf-8">
+  <title>点击测试</title>
   <style>
     body {
       display: flex;
@@ -67,10 +68,10 @@
       document.getElementById('button2').dataset.clicks = 0;
       document.getElementById('button3').dataset.clicks = 0;
       document.getElementById('button4').dataset.clicks = 0;
-      document.getElementById('button1').innerText = 'Click Me (0)';
-      document.getElementById('button2').innerText = 'Click Me (0)';
-      document.getElementById('button3').innerText = 'Click Me (0)';
-      document.getElementById('button4').innerText = 'Click Me (0)';
+      document.getElementById('button1').innerText = ' 2链 (0)';
+      document.getElementById('button2').innerText = ' 1链 (0)';
+      document.getElementById('button3').innerText = ' 查询 (0)';
+      document.getElementById('button4').innerText = ' 冗余 (0)';
     }
 
     // Function to update the click count and change the button color
@@ -104,10 +105,10 @@
 <body>
   <div class="button-container">
     <button id="resetButton" onclick="resetClickCounts()">Reset Click Count</button>
-    <button id="button1" onclick="updateClickCountAndColor('button1')">Click Me (0)</button>
-    <button id="button2" onclick="updateClickCountAndColor('button2')">Click Me (0)</button>
-    <button id="button3" onclick="updateClickCountAndColor('button3')">Click Me (0)</button>
-    <button id="button4" onclick="updateClickCountAndColor('button4')">Click Me (0)</button>
+    <button id="button1" onclick="updateClickCountAndColor('button1')"> 2链 (0)</button>
+    <button id="button2" onclick="updateClickCountAndColor('button2')"> 1链 (0)</button>
+    <button id="button3" onclick="updateClickCountAndColor('button3')"> 查询 (0)</button>
+    <button id="button4" onclick="updateClickCountAndColor('button4')"> 冗余 (0)</button>
 
     <div id="timer">Time Elapsed: 0 seconds</div>
   </div>

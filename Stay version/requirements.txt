@@ -1,5 +1,4 @@
 pyautogui~=0.9.54
 pynput~=1.7.6
-pyinstaller~=5.13.0
 future~=0.18.3
 pyperclip~=1.8.2
