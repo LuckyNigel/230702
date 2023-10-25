@@ -1,11 +1,13 @@
 import threading
 import time
 import tkinter as tk
+from tkinter import ttk
 import pyautogui
 from pynput.keyboard import Controller as KeyboardController
 from pynput.keyboard import Listener as KeyboardListener
 from pynput.mouse import Controller as MouseController
 from pynput.mouse import Listener as MouseListener
+import tkinter.messagebox as messagebox
 
 global coord_x1, coord_y1, coord_x2, coord_y2, coord_x3, coord_y3
 coord_x1, coord_y1, coord_x2, coord_y2, coord_x3, coord_y3 = 0, 0, 0, 0, 0, 0
@@ -33,13 +35,13 @@ def on_click(x, y, button, pressed):
         global coord_x1, coord_y1, coord_x2, coord_y2, coord_x3, coord_y3
         if coord_x1 == coord_y1 == 0:
             coord_x1, coord_y1 = x, y
-            coord_label1.config(text="[2链] x: {}, y: {}".format(coord_x1, coord_y1), bg="#dedede")
+            coord_label1.config(text="[2链坐标] x: {}, y: {}".format(coord_x1, coord_y1))
         elif coord_x2 == coord_y2 == 0:
             coord_x2, coord_y2 = x, y
-            coord_label2.config(text="[1链] x: {}, y: {}".format(coord_x2, coord_y2), bg="#dedede")
+            coord_label2.config(text="[1链坐标] x: {}, y: {}".format(coord_x2, coord_y2))
         else:
             coord_x3, coord_y3 = x, y
-            coord_label3.config(text="[查询] x: {}, y: {}".format(coord_x3, coord_y3), bg="#dedede")
+            coord_label3.config(text="[查询坐标] x: {}, y: {}".format(coord_x3, coord_y3))
             return False
 
 
@@ -99,7 +101,7 @@ def click_popup():
                 continue
 
     except KeyboardInterrupt:
-        return (0)
+        return 0
 
 
 def click_stay():
@@ -136,50 +138,51 @@ def click_stay():
         return (0)
 
 
+def on_closing():
+    if messagebox.askokcancel("二次确认", "你确定要终止进程吗？"):
+        # 用户点击确认关闭
+        stop_program()  # 停止点击操作
+        root.destroy()
+
+
 root = tk.Tk()
-root.resizable(False, False)
-root.title("讲解点击-弹窗版")
-
+root.title("讲解点击-终极版")
 root.attributes('-topmost', 1)
-
-# 计算标签和下方组件的相对位置
-label_pady = 20
-label_rely = 0.35  # 修改这里
-options_rely = 0.9
-
-root.minsize(400, 175)
-
+root.protocol("WM_DELETE_WINDOW", on_closing)  # 关联关闭窗口操作
+# 设置窗口大小
+root.geometry("640x170")  # 增加高度以容纳间隔
+# 禁止窗口缩放
+root.resizable(False, False)
+# 创建一个Frame用于放置所有组件
 frame = tk.Frame(root)
-frame.place(relx=0.5, rely=label_rely, anchor='center')
+frame.pack(pady=25)  # 设置上下间隔为25像素
 
-frame_labels = tk.Frame(root)
-frame_labels.place(relx=0.5, rely=label_rely, anchor='center')
-
-coord_label1 = tk.Label(frame_labels, text="[2链] x: 0, y: 0", bg="#dedede")
+coord_label1 = tk.Label(frame, text="[2链坐标] x: 0, y: 0", bg="#dedede")
 coord_label1.pack(side=tk.LEFT, padx=(10, 10))
-coord_label2 = tk.Label(frame_labels, text="[1链] x: 0, y: 0", bg="#dedede")
+coord_label2 = tk.Label(frame, text="[1链坐标] x: 0, y: 0", bg="#dedede")
 coord_label2.pack(side=tk.LEFT, padx=(10, 10))
-coord_label3 = tk.Label(frame_labels, text="[查询] x: 0, y: 0", bg="#dedede")
+coord_label3 = tk.Label(frame, text="[查询坐标] x: 0, y: 0", bg="#dedede")
 coord_label3.pack(side=tk.LEFT, padx=(10, 10))
 
+# 创建一个Frame用于放置选择坐标和其他操作
 frame_options = tk.Frame(root)
-frame_options.place(relx=0.5, rely=options_rely, anchor='center')
+frame_options.pack(pady=25)  # 设置上下间隔为25像素
 
 copy_button = tk.Button(frame_options, text="选择坐标", command=copy_coord)
 copy_button.pack(side=tk.LEFT, padx=(10, 10))
 
 click_options_type = tk.StringVar()
 click_options_type.set("弹窗")
-popup_radio = tk.Radiobutton(frame_options, text="弹窗", variable=click_options_type, value="弹窗")
-stay_radio = tk.Radiobutton(frame_options, text="常驻", variable=click_options_type, value="常驻")
+popup_radio = ttk.Radiobutton(frame_options, text="弹窗", variable=click_options_type, value="弹窗")
+stay_radio = ttk.Radiobutton(frame_options, text="常驻", variable=click_options_type, value="常驻")
 popup_radio.pack(side=tk.LEFT, padx=(10, 10))
 stay_radio.pack(side=tk.LEFT, padx=(10, 10))
 
 click_options = tk.IntVar()
-click_options.set(7)  # 默认为7小时
-popup_time_label = tk.Label(frame_options, text="点击循环时间 (小时):")
+click_options.set(14)  # 默认为14小时
+popup_time_label = tk.Label(frame_options, text="循环时长(小时) =")
 popup_time_label.pack(side=tk.LEFT, padx=(10, 10))
-popup_time_option = tk.OptionMenu(frame_options, click_options, 7, 11, 14)
+popup_time_option = ttk.Combobox(frame_options, textvariable=click_options, values=(7, 11, 14), width=4)  # 设置宽度
 popup_time_option.pack(side=tk.LEFT, padx=(10, 10))
 
 start_button = tk.Button(frame_options, text="开始", command=start_program)
