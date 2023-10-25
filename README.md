@@ -8,6 +8,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 ```
 pip install -r requirements.txt
 ```
-电商直播中有一个重复性很高的动作就是点击讲解以让链接卡片能够触达到尽可能多的进入到直播间的观众，这个项目能够帮助主讲主推的直播间的某个链接保持在直播间右下角位置出现，能够让每个进入直播间的用户都能看到链接
-
+代替人完成电商直播中控岗位的讲解动作，当前仅适用于百应，其他平台未测试过
+### 声明
+本仓库为开源非盈利项目，发布的release的logo来源[阿里图标库作者页](https://www.iconfont.cn/collections/detail?spm=a313x.user_detail.i1.dc64b3430.42c83a81WfAk99&cid=46745)
 ### [点击我下载Windows版本](https://github.com/itsAnstar/230702/releases/download/AutomaticClick-12Hour/Click-12H.exe)
