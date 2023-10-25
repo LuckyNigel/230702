@@ -150,7 +150,7 @@ root.title("讲解点击-终极版")
 root.attributes('-topmost', 1)
 root.protocol("WM_DELETE_WINDOW", on_closing)  # 关联关闭窗口操作
 # 设置窗口大小
-root.geometry("640x170")  # 增加高度以容纳间隔
+root.geometry("690x170")  # 增加高度以容纳间隔
 # 禁止窗口缩放
 root.resizable(False, False)
 # 创建一个Frame用于放置所有组件
@@ -183,6 +183,8 @@ click_options.set(14)  # 默认为14小时
 popup_time_label = tk.Label(frame_options, text="循环时长(小时) =")
 popup_time_label.pack(side=tk.LEFT, padx=(10, 10))
 popup_time_option = ttk.Combobox(frame_options, textvariable=click_options, values=(7, 11, 14), width=4)  # 设置宽度
+# 禁止选择框输入文本
+popup_time_option.state(["readonly"])
 popup_time_option.pack(side=tk.LEFT, padx=(10, 10))
 
 start_button = tk.Button(frame_options, text="开始", command=start_program)
