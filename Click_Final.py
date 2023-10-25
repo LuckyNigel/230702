@@ -35,19 +35,29 @@ def on_click(x, y, button, pressed):
         global coord_x1, coord_y1, coord_x2, coord_y2, coord_x3, coord_y3
         if coord_x1 == coord_y1 == 0:
             coord_x1, coord_y1 = x, y
-            coord_label1.config(text="[2链坐标] x: {}, y: {}".format(coord_x1, coord_y1))
+            coord_label1.config(text="[2链] x: {}, y: {}".format(coord_x1, coord_y1))
         elif coord_x2 == coord_y2 == 0:
             coord_x2, coord_y2 = x, y
-            coord_label2.config(text="[1链坐标] x: {}, y: {}".format(coord_x2, coord_y2))
+            coord_label2.config(text="[1链] x: {}, y: {}".format(coord_x2, coord_y2))
         else:
             coord_x3, coord_y3 = x, y
-            coord_label3.config(text="[查询坐标] x: {}, y: {}".format(coord_x3, coord_y3))
+            coord_label3.config(text="[查询] x: {}, y: {}".format(coord_x3, coord_y3))
             return False
 
 
 def copy_coord():
     listener = MouseListener(on_click=on_click)
     listener.start()
+
+
+def update_title():
+    remaining_time = click_duration * 3600
+    while remaining_time > 0:
+        minutes = remaining_time // 60
+        seconds = remaining_time % 60
+        root.title("讲解点击-{}版 - {:02d}:{:02d}".format(click_options_type.get(), minutes, seconds))
+        remaining_time -= 1
+        time.sleep(1)
 
 
 def start_program():
@@ -57,8 +67,10 @@ def start_program():
 
     if click_options_type.get() == "弹窗":
         threading.Thread(target=click_popup).start()
+        threading.Thread(target=update_title).start()
     elif click_options_type.get() == "常驻":
         threading.Thread(target=click_stay).start()
+        threading.Thread(target=update_title).start()
 
 
 def stop_program():
@@ -77,7 +89,7 @@ def click_popup():
 
     try:
         global end_time
-        end_time = time.time() + click_duration * 60
+        end_time = time.time() + click_duration * 3600
         while time.time() < end_time:
             try:
                 global coord_x1, coord_y1, coord_x2, coord_y2, coord_x3, coord_y3
