@@ -55,7 +55,8 @@ def update_title():
     while remaining_time > 0:
         minutes = remaining_time // 60
         seconds = remaining_time % 60
-        root.title("讲解点击-{}版 - {:02d}:{:02d}".format(click_options_type.get(), minutes, seconds))
+
+        root.title("讲解点击-->当前模式 : {}--> {:02d}:{:02d} <--".format(click_options_type.get(), minutes, seconds))
         remaining_time -= 1
         time.sleep(1)
 
@@ -147,11 +148,11 @@ def click_stay():
                 continue
 
     except KeyboardInterrupt:
-        return (0)
+        return 0
 
 
 def on_closing():
-    if messagebox.askokcancel("二次确认", "你确定要终止进程吗？"):
+    if messagebox.askokcancel("**  二次确认  **", "------------------------\n软件开源免费\n请您遵循MIT开源协议\n------------------------\n你确定要终止进程吗？"):
         # 用户点击确认关闭
         stop_program()  # 停止点击操作
         root.destroy()
@@ -195,8 +196,7 @@ click_options.set(14)  # 默认为14小时
 popup_time_label = tk.Label(frame_options, text="循环时长(小时) =")
 popup_time_label.pack(side=tk.LEFT, padx=(10, 10))
 popup_time_option = ttk.Combobox(frame_options, textvariable=click_options, values=(7, 11, 14), width=4)  # 设置宽度
-# 禁止选择框输入文本
-popup_time_option.state(["readonly"])
+popup_time_option.state(["readonly"])  # 禁止选择框输入文本
 popup_time_option.pack(side=tk.LEFT, padx=(10, 10))
 
 start_button = tk.Button(frame_options, text="开始", command=start_program)
