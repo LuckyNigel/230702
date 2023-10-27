@@ -11,6 +11,7 @@ import tkinter.messagebox as messagebox
 
 global coord_x1, coord_y1, coord_x2, coord_y2, coord_x3, coord_y3
 coord_x1, coord_y1, coord_x2, coord_y2, coord_x3, coord_y3 = 0, 0, 0, 0, 0, 0
+end_time = None  # 在全局范围内定义end_time变量
 
 keyboard_active = False
 click_duration = 0
@@ -51,6 +52,7 @@ def copy_coord():
 
 
 def update_title():
+    global click_duration, end_time  # 在函数内引用全局变量end_time
     remaining_time = click_duration * 3600
     while remaining_time > 0:
         minutes = remaining_time // 60
@@ -59,6 +61,8 @@ def update_title():
         root.title("讲解点击-->当前模式 : {}--> {:02d}:{:02d} <--".format(click_options_type.get(), minutes, seconds))
         remaining_time -= 1
         time.sleep(1)
+        if end_time is not None and time.time() >= end_time:
+            break
 
 
 def start_program():
@@ -77,6 +81,7 @@ def start_program():
 def stop_program():
     global end_time
     end_time = time.time()
+    root.title("讲解点击-终极版")  # 停止后将窗口标题还原
 
 
 keyboard = KeyboardController()
