@@ -3,15 +3,14 @@ import time
 import tkinter as tk
 from tkinter import ttk
 import pyautogui
-from pynput.keyboard import Controller as KeyboardController
-from pynput.keyboard import Listener as KeyboardListener
-from pynput.mouse import Controller as MouseController
 from pynput.mouse import Listener as MouseListener
 import tkinter.messagebox as messagebox
 
+
 class AutoClickerApp:
-    def __init__(self, root):
-        self.root = root
+    def __init__(self, root_windows):
+        self.mouse = None
+        self.root = root_windows
         self.root.title("讲解点击-终极版")
         self.root.attributes('-topmost', 1)
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
@@ -23,9 +22,9 @@ class AutoClickerApp:
         self.keyboard_active = False
         self.click_duration = 0
 
-        self.create_gui()
-        
-    def create_gui(self):
+    #     self.create_gui()
+    #     
+    # def create_gui(self):
         frame = tk.Frame(self.root)
         frame.pack(pady=25)
 
@@ -163,6 +162,7 @@ class AutoClickerApp:
         if messagebox.askokcancel("**  二次确认  **", "------------------------\n软件开源免费\n请您遵循MIT开源协议\n------------------------\n你确定要终止进程吗？"):
             self.stop_program()
             self.root.destroy()
+
 
 if __name__ == "__main__":
     root = tk.Tk()
