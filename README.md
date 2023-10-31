@@ -1,8 +1,8 @@
 # 仓库简介
 <p align="center">
     <img src ="https://img.shields.io/badge/version-3.0-blueviolet.svg"/>
-    <img src ="https://img.shields.io/badge/platform-windows|linux-yellow.svg"/>
-    <img src ="https://img.shields.io/badge/python-3.1X-blue.svg" />
+    <img src ="https://img.shields.io/badge/platform-Windows|Linux-yellow.svg"/>
+    <img src ="https://img.shields.io/badge/python-3.1x-blue.svg" />
     <img src ="https://img.shields.io/github/license/vnpy/vnpy.svg?color=orange"/>
 </p>
 代替人完成电商直播中控岗位的讲解动作，当前仅适用于百应，其他平台未测试过
