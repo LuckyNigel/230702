@@ -19,4 +19,4 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 ```
 pip install -r requirements.txt
 ```
-### [点击我下载Windows版本](https://github.com/itsAnstar/230702/releases/download/publish/Click-FinalVersion.exe)
+### [已构建Windows版本-点击我下载](https://github.com/itsAnstar/230702/releases/download/publish/Click-FinalVersion.exe)
