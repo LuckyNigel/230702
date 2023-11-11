@@ -9,21 +9,20 @@ import tkinter.messagebox as messagebox
 
 class AutoClickerApp:
     def __init__(self, root_windows):
-        self.mouse = None
         self.root = root_windows
         self.root.title("讲解点击-终极版")
         self.root.attributes('-topmost', 1)
         self.root.protocol("WM_DELETE_WINDOW", self.on_closing)
         self.root.geometry("690x170")
         self.root.resizable(False, False)
-        
+
         self.coord_x1, self.coord_y1, self.coord_x2, self.coord_y2, self.coord_x3, self.coord_y3 = 0, 0, 0, 0, 0, 0
         self.end_time = None
         self.keyboard_active = False
         self.click_duration = 0
 
     #     self.create_gui()
-    #     
+    #
     # def create_gui(self):
         frame = tk.Frame(self.root)
         frame.pack(pady=25)
@@ -60,11 +59,11 @@ class AutoClickerApp:
         start_button.pack(side=tk.LEFT, padx=(10, 10))
         stop_button = tk.Button(frame_options, text="停止", command=self.stop_program)
         stop_button.pack(side=tk.LEFT, padx=(10, 10))
-        
+
     def copy_coord(self):
         listener = MouseListener(on_click=self.on_click)
         listener.start()
-        
+
     def on_click(self, x, y, button, pressed):
         if pressed:
             if self.coord_x1 == self.coord_y1 == 0:
@@ -77,13 +76,13 @@ class AutoClickerApp:
                 self.coord_x3, self.coord_y3 = x, y
                 self.coord_label3.config(text="[查询] x: {}, y: {}".format(self.coord_x3, self.coord_y3))
                 return False
-        
+
     def on_key_press(self, key):
         self.keyboard_active = True
-        
+
     def on_key_release(self, key):
         self.keyboard_active = False
-        
+
     def start_program(self):
         self.click_duration = self.click_options.get()
         if self.click_options_type.get() == "弹窗":
@@ -92,22 +91,23 @@ class AutoClickerApp:
         elif self.click_options_type.get() == "常驻":
             threading.Thread(target=self.click_stay).start()
             threading.Thread(target=self.update_title).start()
-            
+
     def stop_program(self):
         self.end_time = time.time()
         self.root.title("讲解点击-终极版")
-        
+
     def update_title(self):
         remaining_time = self.click_duration * 3600
         while remaining_time > 0:
             minutes = remaining_time // 60
             seconds = remaining_time % 60
-            self.root.title("讲解点击-->当前模式 : {}--> {:02d}:{:02d} <--".format(self.click_options_type.get(), minutes, seconds))
+            self.root.title(
+                "讲解点击-->当前模式 : {}--> {:02d}:{:02d} <--".format(self.click_options_type.get(), minutes, seconds))
             remaining_time -= 1
             time.sleep(1)
             if self.end_time is not None and time.time() >= self.end_time:
                 break
-        
+
     def click_popup(self):
         pyautogui.FAILSAFE = False
         time.sleep(5)
@@ -132,7 +132,7 @@ class AutoClickerApp:
                 continue
         except KeyboardInterrupt:
             return 0
-        
+
     def click_stay(self):
         pyautogui.FAILSAFE = False
         time.sleep(5)
@@ -157,9 +157,10 @@ class AutoClickerApp:
                 continue
         except KeyboardInterrupt:
             return 0
-        
+
     def on_closing(self):
-        if messagebox.askokcancel("**  二次确认  **", "------------------------\n软件开源免费\n请您遵循MIT开源协议\n------------------------\n你确定要终止进程吗？"):
+        if messagebox.askokcancel("**  二次确认  **",
+                                  "------------------------\n软件开源免费\n请您遵循MIT开源协议\n------------------------\n你确定要终止进程吗？"):
             self.stop_program()
             self.root.destroy()
 
