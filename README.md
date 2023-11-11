@@ -5,8 +5,9 @@
     <img src ="https://img.shields.io/badge/python-3.1x-blue.svg" />
     <img src ="https://img.shields.io/github/license/vnpy/vnpy.svg?color=orange"/>
 </p>
-代替人完成电商直播中控岗位的讲解动作，当前仅适用于百应，其他平台未测试过
 
+代替人完成电商直播中控岗位的讲解动作，当前仅适用于百应，其他平台未测试过
+-->[交流群](https://applink.larksuite.com/client/chat/chatter/add_by_link?link_token=1a0u5712-f58e-4386-ba8d-4e0e0ad38aeh)<--
 #### 声明
 本仓库为开源非盈利项目，发布的releases的logo来源[阿里图标库作者页](https://www.iconfont.cn/collections/detail?spm=a313x.user_detail.i1.dc64b3430.42c83a81WfAk99&cid=46745)
 
